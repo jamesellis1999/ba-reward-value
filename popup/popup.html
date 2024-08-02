@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BA Reward Flight Value</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="header">
+        <img src="../images/money-plane-128.png" alt="Logo">
+        <div>
+            <h1>BA Reward</h1>
+            <h1>Flight Value</h1>
+        </div>
+    </div> 
+    <hr>
+    <div class="options-container">
+        <label class="options-description">Choose an avios value option:</label>
+        <div class="radio-container">
+            <input type="radio" class="avios-radio" name="avios-value" id="radio-default" value="1" checked>
+            <label for="radio-default">1p</label>
+            <span class="value-info">Approx. Value</span>
+        </div>
+        <div class="radio-container">
+            <input type="radio" class="avios-radio" name="avios-value" id="radio-boost1x" value="0.94">
+            <label for="radio-boost1x">0.94p</label>
+            <span class="value-info">1x Boost Value</span>
+        </div>
+        <div class="radio-container">
+            <input type="radio" class="avios-radio" name="avios-value" id="radio-boost2x" value="0.93">
+            <label for="radio-boost2x">0.93p</label>
+            <label for="radio-boost2x" class="value-info">2x Boost Value</label>
+        </div>
+        <div class="radio-container">
+            <input type="radio" class="avios-radio" name="avios-value" id="radio-boost3x" value="0.92">
+            <label for="radio-boost3x">0.92p <span class="value-info">3x Boost Value</span></label>
+        </div>
+        <div class="radio-container">
+            <input type="radio" class="avios-radio" name="avios-value" id="radio-buy"  value="1.72">
+            <label for="radio-buy">1.72p <span class="value-info">BA Avios Price</span></label>
+        </div>
+        <div class="radio-container">
+            <input type="radio" class="avios-radio" name="avios-value" id="radio-custom-value" value="custom">
+            <input type="number" class="custom-input" id="custom-input", min="0", max="5", placeholder="Custom Value (0-5p)" disabled>
+        </div>
+        <div class="radio-container custom-radio-container">
+            <small class="error-message" id="custom-input-error">Enter a value between 0 and 5</small>
+        </div>
+    </div>
+</body>
+<script src="popup.js"></script>
+</html>

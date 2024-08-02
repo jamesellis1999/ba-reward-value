@@ -14,5 +14,9 @@
             "https://www.britishairways.com/travel/redeem/execclub/_gf/en_gb"
           ]
         }
-      ]
+      ],
+    "action": {
+      "default_popup": "popup/popup.html"
+    },
+    "permissions": ["storage"]
 }

@@ -1,0 +1,102 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 20px 25px 10px 25px;
+    width: 225px;
+    box-sizing: border-box;
+    background-color: #f5f5f5;
+}
+.header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.header img {
+    max-height: 50px;
+    margin-right: 10px;
+}
+.header div {
+    display: flex;
+    flex-direction: column;
+}
+.header h1 {
+    font-size: 18px;
+    margin: 0;
+    text-align: left;
+    font-weight: 500;
+    color: #333;
+}
+hr {
+    margin: 10px 0;
+    border: 0;
+    border-top: 1px solid rgb(158, 158, 158);
+}
+
+.options-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.options-description{
+    font-size: 12px;
+}
+
+.radio-container {
+    font-size: 14px;
+    min-height: 25px;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    position: relative;
+}
+
+.avios-radio {
+    margin: 0px;
+}
+
+.value-info {
+    color: grey;
+    position: absolute;
+    right: 0px;
+
+}
+
+/* Custom input */
+
+.custom-radio-container {
+    justify-content: center;
+}
+
+.error-message {
+    color: rgb(199, 87, 80);
+    visibility: hidden;
+}
+
+.error-message.error {
+    visibility: visible;
+}
+
+.custom-input {
+    height: 25px;
+    width: 90%;
+    margin: 0px 0px 0px 0px;
+    border-radius: 5px;
+    border-color: black;
+    border-width: 1px;
+}
+
+.custom-input.error {
+    border-color: rgb(199, 87, 80);
+    position: relative;
+    animation: shake .1s linear;
+    animation-iteration-count: 3;
+}
+
+@keyframes shake {
+    0% { left: -5px; }
+    100% { right: -5px; }
+}
+
+
+
