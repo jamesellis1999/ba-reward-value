@@ -23,69 +23,75 @@ function appendAviosValue(priceElements, aviosValue) {
   }
 }
 
-const runProcess = () => {
-  elementsModified = false;
+async function flightSelectProcess() {
+
+  const {aviosValue} = await chrome.storage.local.get({"aviosValue": 1})
 
   const mainPrice = document.getElementsByClassName('totalPriceAviosTxt');
-  if (mainPrice.length > 0) {
-    chrome.storage.local.get({"aviosValue": 1}, (result) => {
-      const aviosValue = result.aviosValue;
-      appendAviosValue(mainPrice, aviosValue);
-    });
-    elementsModified = true;
-  };
+  appendAviosValue(mainPrice, aviosValue);
 
   const otherPrices = document.getElementsByClassName('lstStyleSB');
-  if (otherPrices.length > 0) {
-    chrome.storage.local.get({"aviosValue": 1}, (result) => {
-      const aviosValue = result.aviosValue;
-      appendAviosValue(otherPrices, aviosValue);
-    });
-    elementsModified = true;
-  };
-
-  return elementsModified;
+  appendAviosValue(otherPrices, aviosValue);
 };
 
+async function flightQuoteProcess() {
+
+  const {aviosValue} = await chrome.storage.local.get({"aviosValue": 1})
+
+  const quotes = document.querySelectorAll('div.aviosVoucherWrapper.radio > * > span');
+
+  appendAviosValue(quotes, aviosValue);
+};
 
 const priceObserver = new MutationObserver(() => {
-  disconnect = runProcess()
+  // Separate observer as these take a bit to load
 
-  if (disconnect) {
-    console.log("Attempting disconnect");
-    priceObserver.disconnect();
-    console.log("Disconnect successful");
+  const pricesAvailable = document.getElementById("lstMrePrcngSB");
+
+  if (pricesAvailable) {
+    const promise = flightSelectProcess()
+    promise.then(() => {
+      priceObserver.disconnect();
+    })
   }
 });
 
+const documentObserver = new MutationObserver(() => {
 
-const buttonObserver = new MutationObserver(() => {
-  const buttons = document.getElementsByClassName("flightOption-size1-0 flight-cabin-detail seats-available");
-  const partnerButtons = document.getElementsByClassName("flightOption-size2-0 flight-cabin-detail seats-available");
+  const flightSelectHeader = document.getElementById('sector_1');
 
-  if (buttons.length > 0 || partnerButtons.length > 0) {
-    buttonObserver.disconnect();
-    for (const button of buttons) {
+  if (flightSelectHeader) {
+    const buttons = document.getElementsByClassName("flight-cabin-detail seats-available");
+    documentObserver.disconnect();
+    // Better just to loop?
+    Array.from(buttons).forEach((button) => {
       button.addEventListener("click", () => {
         console.log("Adding price event listener to button");
         priceObserver.observe(document.body, { childList: true, subtree: true });
       })
-    };
-    for (const partnerButton of partnerButtons) {
-      partnerButton.addEventListener("click", () => {
-        console.log("Adding price event listener to partner button");
-        priceObserver.observe(document.body, { childList: true, subtree: true });
-      })
-    };
+    }
+  )
+  };
+
+  // Look for quote on the second page
+  const quoteHeader = document.getElementById("priceQuoteTitle");
+
+  if (quoteHeader) {
+    documentObserver.disconnect();
+    flightQuoteProcess();
   }
 });
 
-buttonObserver.observe(document.body, { childList: true, subtree: true });
+documentObserver.observe(document.body, { childList: true, subtree: true });
 
-chrome.storage.onChanged.addListener((changes, namespace) => {
+chrome.storage.onChanged.addListener((changes, _) => {
   for (let [key, _] of Object.entries(changes)) {
     if (key === "aviosValue") {
-      runProcess();
+      if (document.getElementById('sector_1')) {
+        flightSelectProcess();
+      } else if (document.getElementById("priceQuoteTitle")) {
+        flightQuoteProcess();
+      };
       return;
     };
   };
