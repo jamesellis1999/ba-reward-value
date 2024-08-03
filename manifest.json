@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "BA Reward Flight Value",
-    "version": "1.0",
+    "version": "1.1",
     "description": "Calculate the approximate value of a BA reward flight.",
     "icons": {
         "128": "images/money-plane-128.png"
